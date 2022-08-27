@@ -44,15 +44,10 @@ const getAll = async (req: Request, resp: Response) => {
 
 const remove = async (req: Request, resp: Response) => {
   try {
-    const key = Object.keys(req.query).find((query) => {
-      if (query === "id") return query;
-    });
-
+    const key = req.params.id
     if (!key) throw new Error("Attributo de exclusão não encontrado");
-
-    const value = req.query[key] as string;
-    const respService = await playerServices.remove(value);
-
+    
+    const respService = await playerServices.remove(key);
     return resp.status(200).send(respService);
   } catch (error) {
     return resp.status(400).send(error);
